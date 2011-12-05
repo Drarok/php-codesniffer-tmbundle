@@ -10,24 +10,26 @@
  * @license   http://names.co.uk/license Namesco
  */
 
-// You *must* set this to the 'src' path in the downloaded file.
-define('BUNDLE_SUPPORT_FILES_PATH',
-	'/Users/mgadd/Development/php-codesniffer-bundle-fork/src');
-
 // Make sure we have a file path to work on.
 if (isset($_SERVER['TM_FILEPATH'])) {
 	$fileName = $_SERVER['TM_FILEPATH'];
 } else {
-	throw new Exception('No file path specified');
+	throw new Exception('No file path specified.');
+}
+
+if (isset($_SERVER['TM_BUNDLE_PATH'])) {
+	$bundlePath = $_SERVER['TM_BUNDLE_PATH'];
+} else {
+	throw new Exception('Failed to detect Bundle path.');
 }
 
 // Update the include path to add our support classes.
 set_include_path(
-	BUNDLE_SUPPORT_FILES_PATH
+	$bundlePath
 	. PATH_SEPARATOR
 	. get_include_path());
 
-// Require the classes we need.
+// Require the files we need.
 require_once 'PHPCSHelper.php';
 require_once 'PHPCSView.php';
 

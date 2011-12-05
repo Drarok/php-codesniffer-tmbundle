@@ -19,6 +19,39 @@
 class PHPCSHelper
 {
 	/**
+	 * Cached path to the phpcs binary.
+	 *
+	 * @var string $_binaryPath
+	 */
+	protected static $_binaryPath = null;
+	
+	/**
+	 * Find the phpcs binary on the environment path.
+	 *
+	 * @return string Path to the binary.
+	 * @throws Exception when failing to find the binary.
+	 */
+	public static function getBinaryPath()
+	{
+		if (! self::$_binaryPath) {
+			$paths = explode(PATH_SEPARATOR, $_SERVER['PATH']);
+			foreach ($paths as $path) {
+				$path .= DIRECTORY_SEPARATOR . 'phpcs';
+				if (file_exists($path)) {
+					self::$_binaryPath = $path;
+					break;
+				}
+			}
+			
+			if (! self::$_binaryPath) {
+				throw new Exception('Failed to find phpcs binary.');
+			}
+		}
+		
+		return self::$_binaryPath;
+	}
+	
+	/**
 	 * Filename to parse.
 	 *
 	 * @var $_filename string
@@ -126,7 +159,7 @@ class PHPCSHelper
 	 */
 	public function validate()
 	{
-		$cmd = 'phpcs';
+		$cmd = self::getBinaryPath();
 		
 		$args = array(
 			'--report=xml',
