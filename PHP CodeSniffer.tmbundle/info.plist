@@ -3,8 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>name</key>
-	<string>PHP_CodeSniffer</string>
+	<string>PHP CodeSniffer</string>
+	<key>ordering</key>
+	<array>
+		<string>1BAE9279-8E16-41DB-89D5-CDFE146D8C72</string>
+	</array>
 	<key>uuid</key>
-	<string>6A78ABC8-4A54-4611-89F0-8089AE44907C</string>
+	<string>D7639815-1DCE-4AB0-8E0B-33D6CE10E9DF</string>
 </dict>
 </plist>
