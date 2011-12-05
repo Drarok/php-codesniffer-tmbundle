@@ -4,14 +4,6 @@ html, body {
 	font-size: 12px;
 }
 
-a, a:visited {
-	text-decoration: none;
-}
-
-a:hover {
-	color: black;
-}
-
 .error, .warning {
 	cursor: pointer;
 }
