@@ -1,5 +1,6 @@
 var errors   = <?php echo $cs->getErrorCount(); ?>;
 var warnings = <?php echo $cs->getWarningCount(); ?>;
+
 function init() {
   var types = [
     {
@@ -22,14 +23,6 @@ function init() {
         var id           = classP + idx;
         var eElem        = document.getElementById(id);
         var textMateLink = eElem.getAttribute('txmt');
-
-        eElem.onmouseover = function() {
-            eElem.className = classN + ' over';
-        };
-
-        eElem.onmouseout = function() {
-            eElem.className = classN;
-        };
 
         eElem.onclick = function() {
           window.location = textMateLink;

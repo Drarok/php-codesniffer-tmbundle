@@ -12,43 +12,18 @@ a:hover {
 	color: black;
 }
 
-.error {
+.error, .warning {
 	cursor: pointer;
-	border: 2px solid red;
-	background-color: #FFF2F2;
-	width: 95%;
-	color: red;
-	margin-bottom: 7px;
-	padding: 3px;
 }
 
-.error.over {
+.error:hover {
 	background-color: #C64949;
 	color: #FFFFFF;
 }
 
-.warning {
-	border: 2px solid #9C8023;
-	background-color: #feffc2;
-	color: black;
-	width: 95%;
-	margin-bottom: 7px;
-	padding: 3px;
-}
-
-.warning.over {
+.warning:hover {
 	background-color: #9C8023;
 	color: #FFFFFF;
-}
-
-.success {
-	background: #E6EFC2;
-	color: #264409;
-	border-color: #C6D880;
-	padding: 0.8em;
-	margin-bottom: 1em;
-	border-style: solid;
-	border-width: 2px;
 }
 
 .type {
@@ -73,3 +48,19 @@ a:hover {
 	padding-top: 3px;
 	color: black;
 }
+
+/**
+ * Success, info, notice and error/alert boxes
+ * Taken from Blueprint CSS: http://blueprintcss.org/
+ */
+
+.error,
+.alert, 
+.notice,
+.success, 
+.info          { padding: 0.8em; margin-bottom: 1em; border: 2px solid #DDD; }
+
+.error, .alert { background: #FBE3E4; color: #8A1F11; border-color: #FBC2C4; }
+.notice        { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success       { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.info          { background: #D5EDF8; color: #205791; border-color: #92CAE4; }
