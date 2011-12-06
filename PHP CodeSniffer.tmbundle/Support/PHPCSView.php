@@ -88,14 +88,22 @@ class PHPCSView
 	/**
 	 * Variable setter for substitution when rendering.
 	 *
-	 * @param string $key   Name to use during replacement.
-	 * @param mixed  $value Variable content to use as replacement.
+	 * @param string|array $key   Name to use during replacement, or array of
+	 * key => value pairs.
+	 * @param mixed        $value Variable content to use as replacement.
 	 *
 	 * @return object Current instance (allows chaining).
 	 */
-	public function set($key, $value)
+	public function set($key, $value = null)
 	{
-		$this->_variables[$key] = $value;
+		if (is_array($key) && is_null($value)) {
+			foreach ($key as $k => $v) {
+				$this->set($k, $v);
+			}
+		} else {
+			$this->_variables[$key] = $value;
+		}
+		
 		return $this;
 	}
 	
