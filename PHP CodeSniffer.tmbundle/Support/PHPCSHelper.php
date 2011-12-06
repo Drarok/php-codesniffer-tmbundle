@@ -29,7 +29,7 @@ class PHPCSHelper
 	 * Find the phpcs binary on the environment path.
 	 *
 	 * @return string Path to the binary.
-	 * @throws Exception when failing to find the binary.
+	 * @throws Exception If finding the binary fails.
 	 */
 	public static function getBinaryPath()
 	{
