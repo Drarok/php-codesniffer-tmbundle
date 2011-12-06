@@ -46,6 +46,13 @@ class PHPCSView
 	protected $_variables = array();
 	
 	/**
+	 * Output when rendering (used internally).
+	 *
+	 * @var bool $_output
+	 */
+	protected $_output;
+	
+	/**
 	 * Constructor.
 	 *
 	 * @param string $filename File name to load.
@@ -102,7 +109,7 @@ class PHPCSView
 	 */
 	public function render($output = true)
 	{
-		self::$_output = $output;
+		$this->_output = $output;
 		return $this->_render();
 	}
 	
