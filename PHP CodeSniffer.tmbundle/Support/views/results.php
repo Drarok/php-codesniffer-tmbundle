@@ -1,7 +1,14 @@
+<?php
+
+if ((bool) $standard = $cs->getStandard()) {
+	$standard = ' - Coding Standard: ' . $standard;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>PHP CodeSniffer Results</title>
+	<title>PHP CodeSniffer Results<?php echo $standard; ?></title>
 	
 	<script type="text/javascript">
 <?php echo $script, PHP_EOL; ?>
