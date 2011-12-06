@@ -250,26 +250,23 @@ class PHPCSHelper
 	 */
 	protected static function _renderViolation($filename, $ele, $id)
 	{
-		$type = $ele->getName();
-		$line = $ele['line'];
-		$col = $ele['column'];
-		$sev = $ele['severity'];
-		$txmt = sprintf('txmt://open?url=file://%s&line=%d&column=%d',
-			$filename, $line, $col);
+		static $view = null;
 		
-		ob_start();
-		echo
-			'<div id="', $id, '" class="', $type, '" txmt="', $txmt, '">',
-			PHP_EOL
-		;
-		echo "\t", '<span class="type">', ucfirst($type), '</span>', PHP_EOL;
-		echo "\t", '<span class="line">(line ', $line, ')</span>', PHP_EOL;
-		echo
-			"\t", '<div class="error-msg">', htmlentities((string) $ele),
-			'</div>', PHP_EOL
-		;
-		echo '</div>', PHP_EOL;
+		if (! $view) {
+			$view = PHPCSView::factory('violation');
+		}
 		
-		return ob_get_clean();
+		$view->set(array(
+			'id' => $id,
+			'ele' => $ele,
+			'type' => $ele->getName(),
+			'line' => $line = $ele['line'],
+			'col' => $col = $ele['col'],
+			'txmt' => sprintf(
+				'txmt://open?url=file://%s&line=%d&column=%d',
+				$filename, $line, $col)
+		));
+		
+		return $view->render(false);
 	}
 }
