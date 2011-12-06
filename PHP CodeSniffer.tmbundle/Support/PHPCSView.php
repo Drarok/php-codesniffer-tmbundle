@@ -2,8 +2,8 @@
 /**
  * Simple View class for rendering text or HTML.
  *
- * @category  TextMate Bundles
- * @package   PHPCS TMBundle
+ * @category  TextMate_Bundles
+ * @package   PHPCS_Bundle
  * @author    Mat Gadd <mgadd@names.co.uk>
  * @copyright 2009-2011 Namesco Limited
  * @license   http://names.co.uk/license Namesco
@@ -12,8 +12,8 @@
 /**
  * PHPCSView - render specified file with variable replacement.
  *
- * @category TextMate Bundles
- * @package  PHPCS TMBundle
+ * @category TextMate_Bundles
+ * @package  PHPCS_Bundle
  * @author   Mat Gadd <mgadd@names.co.uk>
  */
 class PHPCSView
@@ -102,15 +102,26 @@ class PHPCSView
 	 */
 	public function render($output = true)
 	{
+		self::$_output = $output;
+		return $this->_render();
+	}
+	
+	/**
+	 * Actual rendering method, using no in-scope variables.
+	 *
+	 * @return string Rendered output.
+	 */
+	protected function _render()
+	{
 		extract($this->_variables, EXTR_OVERWRITE);
 		
-		if (! $output) {
+		if (! $this->_output) {
 			ob_start();
 		}
 		
 		include $this->_filename;
 		
-		if (! $output) {
+		if (! $this->_output) {
 			return ob_get_clean();
 		}
 	}
