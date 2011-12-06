@@ -3,8 +3,8 @@
 /**
  * TextMate PHP CodeSniffer command.
  *
- * @category  TextMate Bundles
- * @package   PHPCS TMBundle
+ * @category  TextMate_Bundles
+ * @package   PHPCS_Bundle
  * @author    Mat Gadd <mgadd@names.co.uk>
  * @copyright 2009-2011 Namesco Limited
  * @license   http://names.co.uk/license Namesco
@@ -25,7 +25,7 @@ if (isset($_SERVER['TM_BUNDLE_PATH'])) {
 
 // Update the include path to add our support classes.
 set_include_path(
-	$bundlePath
+	$bundlePath . DIRECTORY_SEPARATOR . 'Support'
 	. PATH_SEPARATOR
 	. get_include_path());
 
@@ -35,7 +35,13 @@ require_once 'PHPCSView.php';
 
 // Create a codesniffer wrapper, set standard and validate.
 $cs = new PHPCSHelper($fileName);
-$cs->setStandard('Namesco');
+
+// Allow users to set an environment variable to specify the standard.
+if (isset($_SERVER['PHPCS_STANDARD'])) {
+	$cs->setStandard($_SERVER['PHPCS_STANDARD']);
+}
+
+// Run the validation.
 $valid = $cs->validate();
 
 // Create supporting view objects.
@@ -47,7 +53,7 @@ $content = PHPCSView::factory('content')
 	->set('cs', $cs)
 	->set('valid', $valid);
 
-// Create and set up the main template.
+// Create and set up the wrapping template.
 $template = PHPCSView::factory('results')
 	->set('script', $script)
 	->set('style', $style)
