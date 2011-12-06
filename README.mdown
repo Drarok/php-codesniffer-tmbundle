@@ -1,0 +1,25 @@
+# PHP CodeSniffer TextMate Bundle
+
+## About
+
+This bundle aims to wrap PEAR's PHP_CodeSniffer binary to make it easy to use from TextMate.
+
+## Installation
+
+### Download this Bundle from GitHub.
+
+The latest version should always be available from [GitHub][downloads].
+
+### Ensure that the `phpcs` binary is included on your PATH environment variable.
+
+In TextMate's Preferences, double-check the PATH on the "Advanced" tab, under "Shell Variables" contains the path in which `phpcs` is installed.
+
+### (Optionally) Specify your Coding Standard.
+
+In the same area of TextMate's Preferences set a `PHPCS_STANDARD` variable to the name of the Coding Standard you want to pass to PHP_CodeSniffer.
+
+### Double-click the Bundle to install it to TextMate.
+
+Double-click the bundle, and whenever you have a file that needs checking, press `Command-Shift-S`.
+
+[downloads]: https://github.com/Drarok/php-codesniffer-tmbundle/downloads
