@@ -55,6 +55,7 @@ $content = PHPCSView::factory('content')
 
 // Create and set up the wrapping template.
 $template = PHPCSView::factory('results')
+	->set('cs', $cs)
 	->set('script', $script)
 	->set('style', $style)
 	->set('content', $content);
