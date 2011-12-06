@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 /**
  * TextMate PHP CodeSniffer command.
@@ -30,7 +29,9 @@ set_include_path(
 	. get_include_path());
 
 // Require the files we need.
+require_once 'HelperAbstract.php';
 require_once 'PHPCSHelper.php';
+require_once 'PHPLintHelper.php';
 require_once 'PHPCSView.php';
 
 // Create a codesniffer wrapper, set standard and validate.
@@ -41,24 +42,30 @@ if (isset($_SERVER['PHPCS_STANDARD'])) {
 	$cs->setStandard($_SERVER['PHPCS_STANDARD']);
 }
 
-// Run the validation.
-$valid = $cs->validate();
+// Run the CodeSniffer validation.
+$csValid = $cs->validate();
 
 // Create supporting view objects.
 $script = PHPCSView::factory('results', 'js')->set('cs', $cs);
-$style = PHPCSView::factory('style_screen', 'css');
 
-// Create the main content view.
-$content = PHPCSView::factory('content')
+// Create the CodeSniffer content view.
+$phpcsContent = PHPCSView::factory('phpcs_content')
 	->set('cs', $cs)
-	->set('valid', $valid);
+	->set('valid', $csValid);
+
+// Create the Lint content view.
+$lint = new PHPLintHelper($fileName);
+$lintContent = PHPCSView::factory('phplint_content')
+	->set('lint', $lint)
+	->set('valid', $lint->validate());
 
 // Create and set up the wrapping template.
-$template = PHPCSView::factory('results')
+$template = PHPCSView::factory('template')
 	->set('cs', $cs)
 	->set('script', $script)
-	->set('style', $style)
-	->set('content', $content);
+	->set('style', PHPCSView::factory('style_screen', 'css'))
+	->set('phpcsContent', $phpcsContent)
+	->set('lintContent', $lintContent);
 
 // Output the results!
 $template->render();

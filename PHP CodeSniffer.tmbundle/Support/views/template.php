@@ -19,7 +19,10 @@ if ((bool) $standard = $cs->getStandard()) {
 	</style>
 </head>
 <body onload="init();">
-	<div class="summary">PHP CodeSniffer Results<?php echo $standard; ?></div>
-<?php echo $content, PHP_EOL; ?>
+	<h2 class="summary">PHP CodeSniffer Results<?php echo $standard; ?></h2>
+<?php echo $phpcsContent, PHP_EOL; ?>
+
+	<h2 class="summary">PHP Lint Results</h2>
+<?php echo $lintContent, PHP_EOL; ?>
 </body>
 </html>
