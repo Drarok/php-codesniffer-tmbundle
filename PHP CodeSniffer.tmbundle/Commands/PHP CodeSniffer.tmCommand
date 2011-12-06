@@ -37,6 +37,7 @@ set_include_path(
 	. get_include_path());
 
 // Require the files we need.
+require_once 'HelperAbstract.php';
 require_once 'PHPCSHelper.php';
 require_once 'PHPCSView.php';
 

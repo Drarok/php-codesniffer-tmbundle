@@ -16,40 +16,14 @@
  * @package  PHPCS_Bundle
  * @author   Mat Gadd <mgadd@names.co.uk>
  */
-class PHPCSHelper
+class PHPCSHelper extends HelperAbstract
 {
 	/**
-	 * Cached path to the phpcs binary.
+	 * Binary name to search for in getBinaryPath().
 	 *
-	 * @var string $_binaryPath
+	 * @var $_binaryName
 	 */
-	protected static $_binaryPath = null;
-	
-	/**
-	 * Find the phpcs binary on the environment path.
-	 *
-	 * @return string Path to the binary.
-	 * @throws Exception If finding the binary fails.
-	 */
-	public static function getBinaryPath()
-	{
-		if (! self::$_binaryPath) {
-			$paths = explode(PATH_SEPARATOR, $_SERVER['PATH']);
-			foreach ($paths as $path) {
-				$path .= DIRECTORY_SEPARATOR . 'phpcs';
-				if (file_exists($path)) {
-					self::$_binaryPath = $path;
-					break;
-				}
-			}
-			
-			if (! self::$_binaryPath) {
-				throw new Exception('Failed to find phpcs binary.');
-			}
-		}
-		
-		return self::$_binaryPath;
-	}
+	protected $_binaryName = 'phpcs';
 	
 	/**
 	 * Filename to parse.
@@ -176,6 +150,8 @@ class PHPCSHelper
 		
 		// Tell phpcs to give us XML.
 		$args = array(
+			'-d',
+			'error_reporting=0',
 			'--report=xml',
 		);
 		
@@ -185,7 +161,7 @@ class PHPCSHelper
 		}
 		
 		// Start building the full command.
-		$exec = escapeshellcmd(self::getBinaryPath());
+		$exec = escapeshellcmd($this->_getBinaryPath());
 		
 		// Add on each argument.
 		foreach ($args as $arg) {
