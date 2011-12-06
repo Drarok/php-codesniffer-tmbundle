@@ -123,6 +123,16 @@ class PHPCSHelper
 	}
 	
 	/**
+	 * Coding standard getter.
+	 *
+	 * @return string Current coding standard.
+	 */
+	public function getStandard()
+	{
+		return $this->_standard;
+	}
+	
+	/**
 	 * Error count getter.
 	 *
 	 * @return int Error count from parsed phpcs output.
