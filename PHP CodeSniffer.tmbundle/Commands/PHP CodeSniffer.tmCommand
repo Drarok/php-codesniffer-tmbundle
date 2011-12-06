@@ -7,69 +7,12 @@
 	<key>command</key>
 	<string>#!/usr/bin/php
 &lt;?php
-/**
- * TextMate PHP CodeSniffer command.
- *
- * @category  TextMate_Bundles
- * @package   PHPCS_Bundle
- * @author    Mat Gadd &lt;mgadd@names.co.uk&gt;
- * @copyright 2009-2011 Namesco Limited
- * @license   http://names.co.uk/license Namesco
- */
 
-// Make sure we have a file path to work on.
-if (isset($_SERVER['TM_FILEPATH'])) {
-	$fileName = $_SERVER['TM_FILEPATH'];
-} else {
-	throw new Exception('No file path specified.');
-}
+$path = $_SERVER['TM_BUNDLE_PATH']
+	. DIRECTORY_SEPARATOR . 'Support'
+	. DIRECTORY_SEPARATOR . 'textmate_command.php';
 
-if (isset($_SERVER['TM_BUNDLE_PATH'])) {
-	$bundlePath = $_SERVER['TM_BUNDLE_PATH'];
-} else {
-	throw new Exception('Failed to detect Bundle path.');
-}
-
-// Update the include path to add our support classes.
-set_include_path(
-	$bundlePath . DIRECTORY_SEPARATOR . 'Support'
-	. PATH_SEPARATOR
-	. get_include_path());
-
-// Require the files we need.
-require_once 'HelperAbstract.php';
-require_once 'PHPCSHelper.php';
-require_once 'PHPCSView.php';
-
-// Create a codesniffer wrapper, set standard and validate.
-$cs = new PHPCSHelper($fileName);
-
-// Allow users to set an environment variable to specify the standard.
-if (isset($_SERVER['PHPCS_STANDARD'])) {
-	$cs-&gt;setStandard($_SERVER['PHPCS_STANDARD']);
-}
-
-// Run the validation.
-$valid = $cs-&gt;validate();
-
-// Create supporting view objects.
-$script = PHPCSView::factory('results', 'js')-&gt;set('cs', $cs);
-$style = PHPCSView::factory('style_screen', 'css');
-
-// Create the main content view.
-$content = PHPCSView::factory('content')
-	-&gt;set('cs', $cs)
-	-&gt;set('valid', $valid);
-
-// Create and set up the wrapping template.
-$template = PHPCSView::factory('results')
-	-&gt;set('cs', $cs)
-	-&gt;set('script', $script)
-	-&gt;set('style', $style)
-	-&gt;set('content', $content);
-
-// Output the results!
-$template-&gt;render();</string>
+require_once($path);</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>
