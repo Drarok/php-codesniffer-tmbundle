@@ -2,8 +2,8 @@
 /**
  * A wrapper around phpcs for use in TextMate.
  *
- * @category  TextMate Bundles
- * @package   PHPCS TMBundle
+ * @category  TextMate_Bundles
+ * @package   PHPCS_Bundle
  * @author    Mat Gadd <mgadd@names.co.uk>
  * @copyright 2009-2011 Namesco Limited
  * @license   http://names.co.uk/license Namesco
@@ -12,8 +12,8 @@
 /**
  * PHPCSHelper - run and parse the output from phpcs.
  *
- * @category TextMate Bundles
- * @package  PHPCS TMBundle
+ * @category TextMate_Bundles
+ * @package  PHPCS_Bundle
  * @author   Mat Gadd <mgadd@names.co.uk>
  */
 class PHPCSHelper
@@ -159,44 +159,60 @@ class PHPCSHelper
 	 */
 	public function validate()
 	{
-		$cmd = self::getBinaryPath();
+		// Initialise the result vars.
+		$this->_errorCount = 0;
+		$this->_warningCount = 0;
+		$this->_violations = array();
 		
+		// Tell phpcs to give us XML.
 		$args = array(
 			'--report=xml',
 		);
 		
 		if ($this->_standard) {
+			// Add the the coding standard, if set.
 			$args[] = '--standard=' . $this->_standard;
 		}
 		
-		// Build the full command.
-		$exec = escapeshellcmd($cmd);
+		// Start building the full command.
+		$exec = escapeshellcmd(self::getBinaryPath());
 		
+		// Add on each argument.
 		foreach ($args as $arg) {
 			$exec .= ' ' . escapeshellarg($arg);
 		}
 		
+		// End with the file name.
 		$exec .= ' ' . escapeshellarg($this->_filename);
 		
+		// Initialise the vars and run the command.
 		$output = array();
 		$exitCode = null;
 		exec($exec, $output, $exitCode);
 		
 		if ($exitCode == 0) {
+			// Exit code 0 signifies everything's ok.
 			return true;
 		}
 		
-		$this->_errorCount = 0;
-		$this->_warningCount = 0;
-		$this->_violations = array();
+		// Join together each element from the result array.
+		$resultString = implode(PHP_EOL, $output);
 		
-		$xml = simplexml_load_string(implode(PHP_EOL, $output));
+		if (strtoupper(substr($resultString, 0, 5)) == 'ERROR') {
+			// If the string began with 'ERROR', throw it.
+			throw new Exception($resultString);
+		}
 		
+		// Attempt to load the result as XML.
+		$xml = simplexml_load_string($resultString);
+		
+		// Loop over each file result, adding each standard violation.
 		foreach ($xml->file as $file) {
 			$filename = $file['name'];
 			
 			foreach ($file->children() as $violation) {
 				$type = $violation->getName();
+				
 				if ($type == 'error') {
 					$count = ++$this->_errorCount;
 				} else {
