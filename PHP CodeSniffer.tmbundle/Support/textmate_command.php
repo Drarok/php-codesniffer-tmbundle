@@ -17,16 +17,16 @@ if (isset($_SERVER['TM_FILEPATH'])) {
 }
 
 if (isset($_SERVER['TM_BUNDLE_PATH'])) {
-	$bundlePath = $_SERVER['TM_BUNDLE_PATH'];
+	$bundleSupport = $_SERVER['TM_BUNDLE_PATH']
+		. DIRECTORY_SEPARATOR . 'Support';
+} elseif (isset($_SERVER['TM_BUNDLE_SUPPORT'])) {
+	$bundleSupport = $_SERVER['TM_BUNDLE_SUPPORT'];
 } else {
 	throw new Exception('Failed to detect Bundle path.');
 }
 
 // Update the include path to add our support classes.
-set_include_path(
-	$bundlePath . DIRECTORY_SEPARATOR . 'Support'
-	. PATH_SEPARATOR
-	. get_include_path());
+set_include_path($bundleSupport . PATH_SEPARATOR . get_include_path());
 
 // Require the files we need.
 require_once 'HelperAbstract.php';
