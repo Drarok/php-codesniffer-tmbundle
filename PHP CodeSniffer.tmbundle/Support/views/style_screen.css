@@ -45,11 +45,11 @@ html, body {
  */
 
 .error,
-.alert, 
+.alert,
 .notice,
 .warning,
-.success, 
-.info             { padding: 0.8em; margin-bottom: 1em; border: 2px solid #DDD; }
+.success,
+.info             { padding: 0.8em; margin-bottom: 0.4em; border: 2px solid #DDD; }
 
 .error, .alert    { background: #FBE3E4; color: #8A1F11; border-color: #FBC2C4; }
 .notice, .warning { background: #FFF6BF; color: #514721; border-color: #FFD324; }
