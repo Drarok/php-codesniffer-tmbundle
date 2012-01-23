@@ -26,6 +26,8 @@ require_once($path);</string>
 	<string>@S</string>
 	<key>name</key>
 	<string>PHP CodeSniffer</string>
+	<key>output</key>
+	<string>showAsHTML</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
