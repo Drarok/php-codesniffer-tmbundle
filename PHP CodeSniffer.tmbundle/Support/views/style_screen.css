@@ -20,6 +20,10 @@ html, body {
 	font-weight: bold;
 }
 
+.source {
+	float: right;
+}
+
 .error-msg {
 	margin-top: 2px;
 }
