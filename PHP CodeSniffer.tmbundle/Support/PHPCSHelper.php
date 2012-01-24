@@ -240,7 +240,8 @@ class PHPCSHelper extends HelperAbstract
 			'col' => $col = $ele['col'],
 			'txmt' => sprintf(
 				'txmt://open?url=file://%s&line=%d&column=%d',
-				$filename, $line, $col)
+				$filename, $line, $col),
+			'source' => $ele['source'],
 		));
 		
 		return $view->render(false);
