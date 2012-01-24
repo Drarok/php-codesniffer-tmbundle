@@ -31,3 +31,7 @@ function init() {
     } //end for types[i].count
   } //end for typesLen
 }
+
+function goto_url(url) {
+	window.location = url;
+}
